@@ -1,10 +1,21 @@
 {
   "name": "server-push-sandbox",
   "version": "0.0.1",
-  "main": "server.js",
-  "author": "",
+  "author": "Markus Oberlehner",
+  "homepage": "https://github.com/maoberlehner/server-push-sandbox",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maoberlehner/server-push-sandbox"
+  },
+  "bugs": {
+    "url": "https://github.com/maoberlehner/server-push-sandbox/issues"
+  },
   "dependencies": {
     "http2": "^3.3.6"
+  },
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
   }
 }

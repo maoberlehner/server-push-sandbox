@@ -12,9 +12,9 @@ const contentTypes = {
 };
 
 const onRequest = (request, response) => {
-  const filename = path.join(publicDirectory, request.url).split(`.push`).join(``);
+  const filename = path.join(publicDirectory, request.url).split(`.no-push`).join(``);
   const acceptEncoding = request.headers['accept-encoding'] || ``;
-  const push = request.url.split(`.push`).length > 1;
+  const push = request.url.split(`.no-push`).length > 1 ? false : true;
 
   if (request.url.includes(`.html`)) {
     const pushFiles = manifest[request.url] ? Object.keys(manifest[request.url]) : [];
