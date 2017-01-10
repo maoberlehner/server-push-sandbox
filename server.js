@@ -18,7 +18,7 @@ const onRequest = (request, response) => {
 
   if (request.url.includes(`.html`)) {
     const pushFiles = manifest[request.url] ? Object.keys(manifest[request.url]) : [];
-    if (pushEnabled && response.push && pushFiles.length) {
+    if (pushEnabled && response.push) {
       pushFiles.forEach((file) => {
         const contentType = contentTypes[manifest[request.url][file].type] || `text/html`;
         const push = response.push(file);
