@@ -14,7 +14,7 @@ const contentTypes = {
 
 const onRequest = (request, response) => {
   const filename = path.join(publicDirectory, request.url).split(`.no-push`).join(``);
-  const pushEnabled = request.url.indexOf(`.no-push`) === -1;
+  const pushEnabled = !request.url.includes(`.no-push`);
 
   if (request.url.includes(`.html`)) {
     const pushFiles = manifest[request.url] ? Object.keys(manifest[request.url]) : [];
