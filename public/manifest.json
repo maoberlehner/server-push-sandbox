@@ -1,0 +1,8 @@
+{
+  "/test.push.html": {
+    "/css/test.css": {
+      "type": "style",
+      "weight": 1
+    }
+  }
+}
