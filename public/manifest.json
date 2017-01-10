@@ -1,7 +1,11 @@
 {
-  "/test.push.html": {
+  "/test.html": {
     "/css/test.css": {
       "type": "style",
+      "weight": 1
+    },
+    "/js/test.js": {
+      "type": "script",
       "weight": 1
     }
   }
