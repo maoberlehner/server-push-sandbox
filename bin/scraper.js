@@ -23,7 +23,7 @@ scrape({
 
   cssFiles.forEach((cssFile) => {
     const relativePath = path.resolve(`/`, path.relative(directory, cssFile));
-    manifest[`index.html`][relativePath] = {
+    manifest[`/index.html`][relativePath] = {
       type: `style`,
       weight: `1`,
     };
@@ -31,7 +31,7 @@ scrape({
 
   jsFiles.forEach((jsFile) => {
     const relativePath = path.resolve(`/`, path.relative(directory, jsFile));
-    manifest[`index.html`][relativePath] = {
+    manifest[`/index.html`][relativePath] = {
       type: `script`,
       weight: `1`,
     };
