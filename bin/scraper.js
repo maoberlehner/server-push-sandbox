@@ -4,6 +4,7 @@ const args = require(`args`);
 const fs = require(`fs`);
 const glob = require(`glob`);
 const path = require(`path`);
+const rimraf = require(`rimraf`);
 const scrape = require(`website-scraper`);
 const URL = require(`url`).URL;
 
@@ -16,6 +17,8 @@ const manifestPath = path.resolve(directory, `manifest.json`);
 const manifest = {
   '/index.html': {},
 };
+
+rimraf.sync(directory);
 
 scrape({
   urls: [flags.url],

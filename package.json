@@ -21,6 +21,7 @@
     "eslint-config-modularis": "^4.0.0",
     "eslint-plugin-import": "^2.2.0",
     "glob": "^7.1.1",
+    "rimraf": "^2.5.4",
     "website-scraper": "^2.1.0"
   },
   "scripts": {
