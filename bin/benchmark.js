@@ -5,7 +5,12 @@ const exec = require(`child_process`).exec;
 const fs = require(`fs`);
 const path = require(`path`);
 
-args.option(`connection`, `DESC`, `mobile3g`);
+args.option(
+  `connection`,
+  `The speed by simulating connection types, one of [mobile3g,
+  mobile3gfast, mobile3gslow, mobile2g, cable, native], default is mobile3g.`,
+  `mobile3g`
+);
 const flags = args.parse(process.argv);
 
 const browsertimePath = path.resolve(
