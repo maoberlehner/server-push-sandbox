@@ -5,10 +5,13 @@ const fs = require(`fs`);
 const glob = require(`glob`);
 const path = require(`path`);
 const scrape = require(`website-scraper`);
+const URL = require(`url`).URL;
 
 args.option(`url`, `The URL which should be scrapped.`);
 const flags = args.parse(process.argv);
-const directory = path.resolve(__dirname, `../sites/${flags.url.split(`://`)[1]}`);
+const urlObject = new URL(flags.url);
+const hostname = urlObject.hostname;
+const directory = path.resolve(__dirname, `../sites/${hostname}`);
 const manifestPath = path.resolve(directory, `manifest.json`);
 const manifest = {
   '/index.html': {},

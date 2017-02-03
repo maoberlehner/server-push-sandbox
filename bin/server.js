@@ -6,7 +6,7 @@ const http2 = require(`http2`);
 const path = require(`path`);
 const zlib = require(`zlib`);
 
-args.option(`site`, `The name of the site (e.g. www.google.com).`);
+args.option(`hostname`, `The hostname of the site (e.g. www.google.com).`);
 const flags = args.parse(process.argv);
 
 const siteDirectory = path.resolve(__dirname, `../sites/${flags.site}`);
