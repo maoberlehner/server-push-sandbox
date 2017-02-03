@@ -23,7 +23,6 @@
     "glob": "^7.1.1",
     "website-scraper": "^2.1.0"
   },
-  "main": "server.js",
   "scripts": {
     "start": "node bin/server.js",
     "scrape": "node bin/scraper.js",
