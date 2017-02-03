@@ -25,6 +25,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node bin/server.js",
+    "scrape": "node bin/scraper.js",
     "benchmark": "node bin/benchmark.js"
   }
 }
