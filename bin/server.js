@@ -3,6 +3,7 @@
 const args = require(`args`);
 const fs = require(`fs`);
 const http2 = require(`http2`);
+const mime = require(`mime`);
 const path = require(`path`);
 const zlib = require(`zlib`);
 
@@ -13,11 +14,6 @@ const siteDirectory = path.resolve(__dirname, `../sites/${flags.hostname}`);
 // eslint-disable-next-line import/no-dynamic-require
 const manifest = require(`${siteDirectory}/manifest.json`);
 
-const contentTypes = {
-  script: `application/javascript`,
-  style: `text/css`,
-};
-
 const onRequest = (request, response) => {
   const filename = path.join(siteDirectory, request.url).split(`.no-push`).join(``);
   const pushEnabled = !request.url.includes(`.no-push`);
@@ -26,9 +22,8 @@ const onRequest = (request, response) => {
     const pushFiles = manifest[request.url] ? Object.keys(manifest[request.url]) : [];
     if (pushEnabled && response.push) {
       pushFiles.forEach((file) => {
-        const contentType = contentTypes[manifest[request.url][file].type] || `text/html`;
         const push = response.push(file);
-        push.writeHead(200, { 'Content-Encoding': `deflate`, 'Content-Type': contentType });
+        push.writeHead(200, { 'Content-Encoding': `deflate`, 'Content-Type': mime.lookup(request.url) });
         fs.createReadStream(path.join(siteDirectory, file)).pipe(zlib.createDeflate()).pipe(push);
       });
     }
@@ -43,7 +38,7 @@ const onRequest = (request, response) => {
   ) {
     // Serve static files.
     const fileStream = fs.createReadStream(filename);
-    response.writeHead(200, { 'Content-Encoding': `deflate` });
+    response.writeHead(200, { 'Content-Encoding': `deflate`, 'Content-Type': mime.lookup(filename) });
     fileStream.pipe(zlib.createDeflate()).pipe(response);
     fileStream.on(`finish`, response.end);
   } else {
