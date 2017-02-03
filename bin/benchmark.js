@@ -27,24 +27,20 @@ const browsertimeCommand = [
 const pushUrl = `-u https://127.0.0.1:8080/index.html`;
 const noPushUrl = `-u https://127.0.0.1:8080/index.no-push.html`;
 
-exec(`${browsertimeCommand.join(` `)} ${pushUrl}`,
-  (error) => {
-    if (error) throw error;
+function executeBrosertime(url) {
+  return new Promise((resolve) => {
+    exec(`${browsertimeCommand.join(` `)} ${url}`, (error) => {
+      if (error) throw error;
 
-    const benchmarkFile = fs.readFileSync(path.resolve(
-      __dirname,
-      `../log/result.json`
-    ));
-    console.log(`PUSH: `, JSON.parse(benchmarkFile).default.statistics.domContentLoadedTime.median);
-
-    exec(`${browsertimeCommand.join(` `)} ${noPushUrl}`,
-      (error) => {
-        if (error) throw error;
-
-        const benchmarkFile = fs.readFileSync(path.resolve(
-          __dirname,
-          `../log/result.json`
-        ));
-        console.log(`NO-PUSH: `, JSON.parse(benchmarkFile).default.statistics.domContentLoadedTime.median);
-      });
+      const benchmarkFile = fs.readFileSync(path.resolve(
+        __dirname,
+        `../log/result.json`
+      ));
+      console.log(`NO-PUSH: `, JSON.parse(benchmarkFile).default.statistics.domContentLoadedTime.median);
+      resolve(JSON.parse(benchmarkFile).default.statistics.domContentLoadedTime.median);
+    });
   });
+}
+
+executeBrosertime(pushUrl)
+  .then(() => executeBrosertime(noPushUrl));
