@@ -9,7 +9,7 @@ const zlib = require(`zlib`);
 args.option(`hostname`, `The hostname of the site (e.g. www.google.com).`);
 const flags = args.parse(process.argv);
 
-const siteDirectory = path.resolve(__dirname, `../sites/${flags.site}`);
+const siteDirectory = path.resolve(__dirname, `../sites/${flags.hostname}`);
 // eslint-disable-next-line import/no-dynamic-require
 const manifest = require(`${siteDirectory}/manifest.json`);
 
