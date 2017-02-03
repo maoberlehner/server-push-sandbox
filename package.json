@@ -15,9 +15,11 @@
     "http2": "^3.3.6"
   },
   "devDependencies": {
+    "args": "^2.2.4",
     "eslint": "^3.13.1",
     "eslint-config-modularis": "^4.0.0",
-    "eslint-plugin-import": "^2.2.0"
+    "eslint-plugin-import": "^2.2.0",
+    "website-scraper": "^2.1.0"
   },
   "main": "server.js",
   "scripts": {
