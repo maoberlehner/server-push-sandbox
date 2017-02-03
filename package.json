@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "args": "^2.2.4",
+    "browsertime": "^0.12.3",
     "eslint": "^3.13.1",
     "eslint-config-modularis": "^4.0.0",
     "eslint-plugin-import": "^2.2.0",
@@ -23,6 +24,7 @@
   },
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node bin/server.js",
+    "benchmark": "node bin/benchmark.js"
   }
 }

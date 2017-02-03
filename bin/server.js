@@ -1,11 +1,17 @@
+#!/usr/bin/env node
+
+const args = require(`args`);
 const fs = require(`fs`);
 const http2 = require(`http2`);
 const path = require(`path`);
 const zlib = require(`zlib`);
 
-const publicDirectory = path.join(__dirname, `public`);
+args.option(`site`, `The name of the site (e.g. www.google.com).`);
+const flags = args.parse(process.argv);
+
+const siteDirectory = path.resolve(__dirname, `../sites/${flags.site}`);
 // eslint-disable-next-line import/no-dynamic-require
-const manifest = require(`${publicDirectory}/manifest.json`);
+const manifest = require(`${siteDirectory}/manifest.json`);
 
 const contentTypes = {
   script: `application/javascript`,
@@ -13,7 +19,7 @@ const contentTypes = {
 };
 
 const onRequest = (request, response) => {
-  const filename = path.join(publicDirectory, request.url).split(`.no-push`).join(``);
+  const filename = path.join(siteDirectory, request.url).split(`.no-push`).join(``);
   const pushEnabled = !request.url.includes(`.no-push`);
 
   if (request.url.includes(`.html`)) {
@@ -23,7 +29,7 @@ const onRequest = (request, response) => {
         const contentType = contentTypes[manifest[request.url][file].type] || `text/html`;
         const push = response.push(file);
         push.writeHead(200, { 'Content-Encoding': `deflate`, 'Content-Type': contentType });
-        fs.createReadStream(path.join(publicDirectory, file)).pipe(zlib.createDeflate()).pipe(push);
+        fs.createReadStream(path.join(siteDirectory, file)).pipe(zlib.createDeflate()).pipe(push);
       });
     }
     const fileStream = fs.createReadStream(filename);
@@ -31,7 +37,7 @@ const onRequest = (request, response) => {
     fileStream.pipe(zlib.createDeflate()).pipe(response);
     fileStream.on(`finish`, response.end);
   } else if (
-    (filename.indexOf(__dirname) === 0) &&
+    (filename.indexOf(path.resolve(__dirname, `../`)) === 0) &&
     fs.existsSync(filename) &&
     fs.statSync(filename).isFile()
   ) {
@@ -47,6 +53,6 @@ const onRequest = (request, response) => {
 };
 
 http2.createServer({
-  key: fs.readFileSync(path.join(__dirname, `/certs/key.pem`)),
-  cert: fs.readFileSync(path.join(__dirname, `/certs/cert.pem`)),
+  key: fs.readFileSync(path.join(__dirname, `../certs/key.pem`)),
+  cert: fs.readFileSync(path.join(__dirname, `../certs/cert.pem`)),
 }, onRequest).listen(8080);
