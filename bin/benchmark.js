@@ -59,6 +59,7 @@ function logResult(statisticData) {
       chalk.reset.bold(`push`),
       chalk.reset.bold(`no-push`),
     ],
+    colAligns: [`right`, `right`, `right`],
   });
 
   const firstPaint = {};
