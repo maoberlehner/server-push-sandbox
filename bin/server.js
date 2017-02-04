@@ -18,12 +18,16 @@ const onRequest = (request, response) => {
   const filename = path.join(siteDirectory, request.url).split(`.no-push`).join(``);
   const pushEnabled = !request.url.includes(`.no-push`);
 
-  if (request.url.includes(`.html`)) {
+  if (
+    path.extname(request.url) === `.html` &&
+    fs.existsSync(filename) &&
+    fs.statSync(filename).isFile()
+  ) {
     const pushFiles = manifest[request.url] ? Object.keys(manifest[request.url]) : [];
     if (pushEnabled && response.push) {
       pushFiles.forEach((file) => {
         const push = response.push(file);
-        push.writeHead(200, { 'Content-Encoding': `deflate`, 'Content-Type': mime.lookup(request.url) });
+        push.writeHead(200, { 'Content-Encoding': `deflate`, 'Content-Type': mime.lookup(file) });
         fs.createReadStream(path.join(siteDirectory, file)).pipe(zlib.createDeflate()).pipe(push);
       });
     }
