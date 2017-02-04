@@ -12,11 +12,11 @@
     "url": "https://github.com/maoberlehner/server-push-sandbox/issues"
   },
   "dependencies": {
+    "browsertime": "1.0.0-beta.23",
     "http2": "^3.3.6"
   },
   "devDependencies": {
     "args": "^2.2.4",
-    "browsertime": "^0.12.3",
     "chalk": "^1.1.3",
     "cli-table": "^0.3.1",
     "eslint": "^3.13.1",
@@ -30,6 +30,7 @@
   "scripts": {
     "start": "node bin/server.js",
     "scrape": "node bin/scraper.js",
-    "benchmark": "node bin/benchmark.js"
+    "benchmark": "node bin/benchmark.js",
+    "browsertime": "browsertime -h"
   }
 }

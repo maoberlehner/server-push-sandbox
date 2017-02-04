@@ -8,10 +8,9 @@ const path = require(`path`);
 const Table = require(`cli-table`);
 
 args.option(
-  `connection`,
-  `The speed by simulating connection types, one of [mobile3g,
-  mobile3gfast, mobile3gslow, mobile2g, cable, native], default is mobile3g.`,
-  `mobile3g`
+  `connectivity`,
+  `The connectivity profile. Possible values: "3g", "3gfast", "3gslow", "3gem", "2g", "cable", "native", "custom".`,
+  `3gfast`
 );
 const flags = args.parse(process.argv);
 
@@ -21,13 +20,15 @@ const browsertimePath = path.resolve(
 );
 const browsertimeCommand = [
   browsertimePath,
-  `-f ./log/result.json`,
-  `--harFile ./log/result.har`,
-  `--connection ${flags.connection}`,
-  `--logDir ./log`,
+  `-b chrome`,
+  `-n 3`,
+  `-c ${flags.connectivity}`,
+  `-o result`,
+  `--skipHar`,
+  `--resultDir ./log`,
 ];
-const pushUrl = `-u https://127.0.0.1:8080/index.html`;
-const noPushUrl = `-u https://127.0.0.1:8080/index.no-push.html`;
+const pushUrl = `https://127.0.0.1:8080/index.html`;
+const noPushUrl = `https://127.0.0.1:8080/index.no-push.html`;
 const data = { push: [], noPush: [] };
 
 function executeBrosertime(url) {
@@ -39,7 +40,7 @@ function executeBrosertime(url) {
         __dirname,
         `../log/result.json`
       ));
-      resolve(JSON.parse(benchmarkFile).default.statistics);
+      resolve(JSON.parse(benchmarkFile).statistics.timings);
     });
   });
 }
@@ -71,31 +72,43 @@ function logResult(statisticData) {
 
   const domContentLoadedTime = {};
   domContentLoadedTime[chalk.reset.bold(`domContentLoadedTime`)] = [
-    formatValue(pushData.domContentLoadedTime.median, noPushData.domContentLoadedTime.median),
-    formatValue(noPushData.domContentLoadedTime.median, pushData.domContentLoadedTime.median),
+    formatValue(
+      pushData.pageTimings.domContentLoadedTime.median,
+      noPushData.pageTimings.domContentLoadedTime.median
+    ),
+    formatValue(
+      noPushData.pageTimings.domContentLoadedTime.median,
+      pushData.pageTimings.domContentLoadedTime.median
+    ),
   ];
   resultTable.push(domContentLoadedTime);
 
   const domInteractiveTime = {};
   domInteractiveTime[chalk.reset.bold(`domInteractiveTime`)] = [
-    formatValue(pushData.domInteractiveTime.median, noPushData.domInteractiveTime.median),
-    formatValue(noPushData.domInteractiveTime.median, pushData.domInteractiveTime.median),
+    formatValue(
+      pushData.pageTimings.domInteractiveTime.median,
+      noPushData.pageTimings.domInteractiveTime.median
+    ),
+    formatValue(
+      noPushData.pageTimings.domInteractiveTime.median,
+      pushData.pageTimings.domInteractiveTime.median
+    ),
   ];
   resultTable.push(domInteractiveTime);
 
-  const pageLoadTime = {};
-  pageLoadTime[chalk.reset.bold(`pageLoadTime`)] = [
-    formatValue(pushData.pageLoadTime.median, noPushData.pageLoadTime.median),
-    formatValue(noPushData.pageLoadTime.median, pushData.pageLoadTime.median),
+  const fullyLoaded = {};
+  fullyLoaded[chalk.reset.bold(`fullyLoaded`)] = [
+    formatValue(pushData.fullyLoaded.median, noPushData.fullyLoaded.median),
+    formatValue(noPushData.fullyLoaded.median, pushData.fullyLoaded.median),
   ];
-  resultTable.push(pageLoadTime);
+  resultTable.push(fullyLoaded);
 
-  const speedIndex = {};
-  speedIndex[chalk.reset.bold(`speedIndex`)] = [
-    formatValue(pushData.speedIndex.median, noPushData.speedIndex.median),
-    formatValue(noPushData.speedIndex.median, pushData.speedIndex.median),
+  const rumSpeedIndex = {};
+  rumSpeedIndex[chalk.reset.bold(`rumSpeedIndex`)] = [
+    formatValue(pushData.rumSpeedIndex.median, noPushData.rumSpeedIndex.median),
+    formatValue(noPushData.rumSpeedIndex.median, pushData.rumSpeedIndex.median),
   ];
-  resultTable.push(speedIndex);
+  resultTable.push(rumSpeedIndex);
   console.log(resultTable.toString());
 }
 
