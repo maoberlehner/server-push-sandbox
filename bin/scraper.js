@@ -43,7 +43,7 @@ scrape({
     };
   });
 
-  fs.writeFileSync(manifestPath, JSON.stringify(manifest));
+  fs.writeFileSync(manifestPath, JSON.stringify(manifest, undefined, 2));
   // eslint-disable-next-line no-console
   console.log(`Successfully scraped: ${flags.url}`);
 });
