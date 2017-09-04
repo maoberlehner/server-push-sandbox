@@ -109,6 +109,7 @@ function logResult(statisticData) {
     formatValue(noPushData.rumSpeedIndex.median, pushData.rumSpeedIndex.median),
   ];
   resultTable.push(rumSpeedIndex);
+  // eslint-disable-next-line no-console
   console.log(resultTable.toString());
 }
 

@@ -12,27 +12,28 @@
     "url": "https://github.com/maoberlehner/server-push-sandbox/issues"
   },
   "dependencies": {
-    "browsertime": "1.0.0-beta.23",
+    "browsertime": "1.7.0",
     "http2": "^3.3.6"
   },
   "devDependencies": {
-    "args": "^2.2.4",
-    "chalk": "^1.1.3",
+    "@avalanche/eslint-config": "^1.0.2",
+    "args": "^3.0.4",
+    "chalk": "^2.1.0",
     "cli-table": "^0.3.1",
-    "eslint": "^3.13.1",
-    "eslint-config-modularis": "^4.0.0",
-    "eslint-plugin-import": "^2.2.0",
-    "glob": "^7.1.1",
-    "mime": "^1.3.4",
-    "opn": "^4.0.2",
-    "rimraf": "^2.5.4",
-    "sitespeed.io": "^4.3.9",
-    "website-scraper": "^2.1.0"
+    "eslint": "^4.6.1",
+    "eslint-plugin-import": "^2.7.0",
+    "glob": "^7.1.2",
+    "mime": "^1.4.0",
+    "opn": "^5.1.0",
+    "rimraf": "^2.6.1",
+    "sitespeed.io": "^5.5.0",
+    "website-scraper": "^3.3.0"
   },
   "scripts": {
     "start": "node bin/server.js",
     "scrape": "node bin/scraper.js",
     "benchmark": "node bin/benchmark.js",
-    "analyze": "node bin/analyze.js"
+    "analyze": "node bin/analyze.js",
+    "lint": "eslint bin/**/*.js"
   }
 }
