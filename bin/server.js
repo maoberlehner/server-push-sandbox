@@ -2,7 +2,7 @@
 
 const args = require(`args`);
 const fs = require(`fs`);
-const http2 = require(`http2`);
+const http2 = require(`http2.js`);
 const mime = require(`mime`);
 const path = require(`path`);
 const zlib = require(`zlib`);
@@ -10,7 +10,9 @@ const zlib = require(`zlib`);
 args.option(`hostname`, `The hostname of the site (e.g. www.google.com).`);
 const flags = args.parse(process.argv);
 
-const siteDirectory = path.resolve(__dirname, `../sites/${flags.hostname}`);
+const siteDirectory = flags.hostname
+  ? path.resolve(__dirname, `../sites/${flags.hostname}`)
+  : path.resolve(__dirname, `../public`);
 // eslint-disable-next-line import/no-dynamic-require
 const manifest = require(`${siteDirectory}/manifest.json`);
 
