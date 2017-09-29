@@ -13,7 +13,8 @@
   },
   "dependencies": {
     "browsertime": "1.7.0",
-    "http2.js": "^4.0.0"
+    "http2.js": "^4.0.0",
+    "snyk": "^1.41.1"
   },
   "devDependencies": {
     "@avalanche/eslint-config": "^1.0.2",
@@ -34,6 +35,9 @@
     "scrape": "node bin/scraper.js",
     "benchmark": "node bin/benchmark.js",
     "analyze": "node bin/analyze.js",
-    "lint": "eslint bin/**/*.js"
-  }
+    "lint": "eslint bin/**/*.js",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "snyk": true
 }
