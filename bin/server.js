@@ -29,7 +29,7 @@ const onRequest = (request, response) => {
     if (pushEnabled && response.push) {
       pushFiles.forEach((file) => {
         const push = response.push(file);
-        push.writeHead(200, { 'Content-Encoding': `deflate`, 'Content-Type': mime.lookup(file) });
+        push.writeHead(200, { 'Content-Encoding': `deflate`, 'Content-Type': mime.getType(file) });
         fs.createReadStream(path.join(siteDirectory, file)).pipe(zlib.createDeflate()).pipe(push);
       });
     }
