@@ -1,0 +1,10 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.10.2
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:moment:20170905':
+    - browsertime > moment:
+        patched: '2018-03-06T14:31:50.895Z'
+    - browsertime > chrome-har > moment:
+        patched: '2018-03-06T14:31:50.895Z'
