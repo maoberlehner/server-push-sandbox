@@ -12,8 +12,9 @@
     "url": "https://github.com/maoberlehner/server-push-sandbox/issues"
   },
   "dependencies": {
-    "browsertime": "2.2.2",
-    "http2.js": "^4.0.2"
+    "browsertime": "9.0.0",
+    "http2.js": "^4.0.2",
+    "@snyk/protect": "latest"
   },
   "devDependencies": {
     "@avalanche/eslint-config": "^1.0.2",
@@ -34,6 +35,9 @@
     "scrape": "node bin/scraper.js",
     "benchmark": "node bin/benchmark.js",
     "analyze": "node bin/analyze.js",
-    "lint": "eslint bin/**/*.js"
-  }
+    "lint": "eslint bin/**/*.js",
+    "prepare": "npm run snyk-protect",
+    "snyk-protect": "snyk-protect"
+  },
+  "snyk": true
 }
